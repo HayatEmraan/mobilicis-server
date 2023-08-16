@@ -1,9 +1,12 @@
 const jwt = require("jsonwebtoken");
+const { getUser } = require("../db/operator");
 require("dotenv").config();
 const jwtSign = async (req, res) => {
   try {
-    const { email } = req.body;
-    const ast = await jwt.sign({ email }, process.env.JWT_SECRET);
+    const email = req.headers.authorization.split(" ")[1];
+    const user = await getUser(email);
+    const signature = user?._id;
+    const ast = await jwt.sign({ signature }, process.env.JWT_SECRET);
     return res.send({ status: "200", token: ast });
   } catch (error) {
     return res

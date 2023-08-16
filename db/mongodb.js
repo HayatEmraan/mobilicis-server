@@ -27,8 +27,10 @@ async function connectDB() {
 }
 
 const usersDB = client.db("usersCollection").collection("users");
+const connectionDB = client.db("usersCollection").collection("connection");
 
 module.exports = {
   usersDB,
   connectDB,
+  connectionDB,
 };
